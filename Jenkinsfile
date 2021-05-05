@@ -2,6 +2,10 @@ pipeline {
   
   agent any
   
+  environment {
+    COMMITMESSAGE = "test_message"
+  }
+  
   stages {
     
     stage("Build"){
