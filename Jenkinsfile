@@ -8,7 +8,7 @@ pipeline {
       
       steps {
         echo 'Modify building the application...'
-        git log --oneline -1 ${GIT_COMMIT}
+        sh 'git log --oneline -1 ${GIT_COMMIT}'
       }
     }
       
