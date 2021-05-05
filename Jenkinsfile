@@ -11,6 +11,8 @@ pipeline {
     stage("Build"){
       
       steps {
+        echo '${env.COMMITMESSAGE}'
+        
         echo 'Modify building the application...'
         echo ' SHA and title'
         sh 'git log --oneline -1 ${GIT_COMMIT}'
