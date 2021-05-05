@@ -11,7 +11,7 @@ pipeline {
     stage("Build"){
       
       steps {
-        echo '${env.COMMITMESSAGE}'
+        echo ${env.COMMITMESSAGE}
         
         echo 'Modify building the application...'
         echo ' SHA and title'
