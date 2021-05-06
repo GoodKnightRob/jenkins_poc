@@ -1,9 +1,11 @@
+def skip = false
+
 pipeline {
   
   agent any
   
   environment {
-    COMMITMESSAGE = "test_message"
+    COMMITMESSAGE = sh(script: 'git log --format=format:%s -1', , returnStdout: true).trim()
   }
   
   stages {
@@ -13,7 +15,9 @@ pipeline {
       steps {
         echo "COMMITMESSAGE = ${env.COMMITMESSAGE}"
         
-        sh 'env.COMMITMESSAGE=$(git log --format=format:%s -1)'
+        script {
+            skip = true
+        }
         
         echo 'Modify building the application...'
         echo ' SHA and title'
@@ -28,6 +32,11 @@ pipeline {
     }
       
     stage ("test"){
+      when{
+          expression{
+              !skip
+          }
+      }
       
       steps{
         echo 'testing the application...'
@@ -35,6 +44,12 @@ pipeline {
     }
       
     stage ("deploy"){
+        when{
+          expression{
+              !skip
+          }
+      }
+      
       steps{
         echo 'deploying the application'
       }
